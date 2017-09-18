@@ -2,50 +2,32 @@
 
 class Model
 {
-    private $htmlSrtings = array(
-                                    '%SELECT-MULTI%'=>'', 
-                                    '%TABLE%'=>'', 
-                                    '%LIST%'=>'', 
-                                    '%LIST-DEF%'=>'', 
-                                    '%CHECKBOX%'=>'',
-                                    '%RADIOBUTTONS%'=>''
-                                );
+    private $htmlHolder = array(
+        '%SELECT%'=>'',
+        '%SELECT-MULTI%'=>'', 
+        '%TABLE%'=>'', 
+        '%LIST%'=>'', 
+        '%LIST-DEF%'=>'', 
+        '%CHECKBOX%'=>'',
+        '%RADIO%'=>''
+    );
 
     public function __construct()
     {
 
     }
-    
+
     public function getArray()
     {       
-        return $this->htmlSrtings;
+        return $this->htmlHolder;
     }
 
-    public function createSelect($name, $size, $values)
+    public function addHolder($name, $value)
     {
-        $this->htmlSrtings['%SELECT-MULTI%'] = HtmlHelper::getSelect($name, $size, $values);
+        if(!empty($name) && !empty($value))
+        {
+            $this->htmlHolder[$name] = $value;
+        }   
     }
-    
-    public function createTable($width, $border, $caption, $name_col, $valuesTab)
-    {
-        $this->htmlSrtings['%TABLE%'] = HtmlHelper::getTable($width, $border, $caption, $name_col, $valuesTab);
-    }
-
-    public function createList($tag, $type, $valuesNum)
-    {
-        $this->htmlSrtings['%LIST%'] = HtmlHelper::getList($tag, $type, $valuesNum);
-    }
-
-    public function createListOfDefinitions($values)
-    {
-        $this->htmlSrtings['%LIST-DEF%'] = HtmlHelper::getListOfDefinitions($values);
-    }
-
-    public function createCheckbox($name, $values)
-    {
-        $this->htmlSrtings['%CHECKBOX%'] = HtmlHelper::getCheckbox($name, $values);
-    }
-
 }
-
 

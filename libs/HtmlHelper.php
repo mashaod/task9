@@ -2,123 +2,153 @@
 
 class HtmlHelper
 {
-    
-  public static function getSelect($name, $size, $values)
-  {  
-      if(!empty($values))
-      {
-          if(!empty($name) && !empty($size) && is_int($size))
-          {
-              $str="<select size='$size' name='$name' multiple>";
 
-              foreach ($values as $key => $value) 
-              {
-                $str = $str . "<option value='$key'>$value</option>\n";
-              } 
+    public static function createSelect($name, $values, $size=1, $multi=false)
+    {  
+        if(!empty($values))
+        {
+            if(!empty($name) && !empty($size) && is_int($size))
+            {
+                $multi == '1'?$multi = 'multiple':$multi=false;
+                $str="<select size='$size' name='$name' $multi>";
 
-              $str = $str . "</select>";
-              return $str;
-          } 
-          else
-          {
-              return "Some is wrong";
-          }
-      }
-      else
-      {
-          return "Values empty";
-      }
-  }
-  
-  
-  public static function getTable($width, $border, $caption, $name_col, $valuesTab)
-  {    
-      $str = "<table width='$width' border='$border'>\n<caption>$caption</caption><tr>";
-            
-      foreach ($name_col as $name) 
-      {
-          $str = $str . "<th>$name</th>\n";
-      }
+                foreach ($values as $key => $value) 
+                {
+                    $str = $str . "<option value='$key'>$value</option>\n";
+                } 
 
-      $str = $str . "</tr>";
-      
-      foreach ($valuesTab as $row => $values) 
-      {
-          $str = $str . "<tr>";
+                $str = $str . "</select>";
+                return $str;
+            } 
+            else
+            {
+                return "Some is wrong";
+            }
+        }
+        else
+        {
+            return "Values empty";
+        }
+    }
 
-          foreach($values as $value)
-          {
-              $str = $str . "<td>$value</td>";
-          }
 
-          $str = $str . "</tr>\n";
-     }
-      
-      $str = $str . "</table>";
-      return $str;
-  }
-  
-  public static function getList($tag, $type, $valuesNum)
-  {  
-      if ($tag == "ol")
-      {
-          $str="<$tag type='$type' start='3'>";
-      }
-      elseif ($tag == "ul")
-      {
-          $str="<$tag type='$type'>";
-      }
-      else
-      {
-          return "incorrect tag";          
-      }
+    public static function createTable($width, $border, $caption, $name_col, $valuesTab)
+    {    
+        $str = "<table width='$width' border='$border'>\n<caption>$caption</caption><tr>";
 
-      foreach ($valuesNum as $value) 
-      {
-          $str = $str . "<li>$value</li>\n";
-      } 
+        foreach ($name_col as $name) 
+        {
+            $str = $str . "<th>$name</th>\n";
+        }
 
-      $str = $str . "</$tag>";
-      return $str;
-   }
+        $str = $str . "</tr>";
 
-  public static function getListOfDefinitions($values)
-  {  
-      if(!empty($values))
-      {
-          $str="<dl>";
+        foreach ($valuesTab as $row => $values) 
+        {
+            $str = $str . "<tr>";
 
-          foreach ($values as $definition => $value)
-          {
-              $str .= "<dt>" . $definition . "</dt>";
-              $str .= "<dd>" . $value . "</dd>";
-          }
+            foreach($values as $value)
+            {
+                $str = $str . "<td>$value</td>";
+            }
 
-          return $str;
-      }
-      else
-      {
-          return "Values empty";
-      }
-   }
+            $str = $str . "</tr>\n";
+        }
 
-  public static function getCheckbox($name, $values)
-  {  
-      if(!empty($values))
-      {
+        $str = $str . "</table>";
+        return $str;
+    }
 
-          foreach ($values as $value)
-          {
-              $str .= "<input type=\"checkbox\" name=\"" . $name . "\" value=\"" . $value['value'] . "\">" . $value['description'] . "<Br />";
-          }
+    public static function createList($tag, $type, $valuesNum)
+    {  
+        if ($tag == "ol")
+        {
+            $str="<$tag type='$type' start='3'>";
+        }
+        elseif ($tag == "ul")
+        {
+            $str="<$tag type='$type'>";
+        }
+        else
+        {
+            return "incorrect tag";          
+        }
 
-          return $str;
-      }
-      else
-      {
-          return "Values empty";
-      }
-   }
+        foreach ($valuesNum as $value) 
+        {
+            $str = $str . "<li>$value</li>\n";
+        } 
+
+        $str = $str . "</$tag>";
+        return $str;
+    }
+
+    public static function createListOfDefinitions($values)
+    {  
+        if(!empty($values))
+        {
+            $str="<dl>";
+
+            foreach ($values as $definition => $value)
+            {
+                $str .= "<dt>" . $definition . "</dt>";
+                $str .= "<dd>" . $value . "</dd>";
+            }
+
+            return $str;
+        }
+        else
+        {
+            return "Values empty";
+        }
+    }
+
+    public static function createCheckbox($name, $values, $checkVal='null')
+    {  
+        if(!empty($values))
+        {
+            foreach ($values as $value => $description)
+            {
+                if ($checkVal != 'null' && in_array($value, $checkVal))
+                {
+                    $str .= "<input type=\"checkbox\" name=\"" . $name . "\" value=\"" . $value . "\" checked>" . $description . "<Br />";
+                }
+                else
+                {
+                    $str .= "<input type=\"checkbox\" name=\"" . $name . "\" value=\"" . $value . "\">" . $description . "<Br />";
+                }
+            }
+
+            return $str;
+        }
+        else
+        {
+            return "Values empty";
+        }
+    }
+    public static function createRadioButtons($name, $values, $checkVal='null')
+    {  
+        if(!empty($values))
+        {
+            foreach ($values as $value => $description)
+            {
+                if ($checkVal != 'null' && $checkVal==$value)
+                {
+                    $str .= "<input type=\"radio\" name=\"" . $name . "\" value=\"" . $value . "\" checked>" . $description . "<Br />";
+                }
+                else
+                {
+                    $str .= "<input type=\"radio\" name=\"" . $name . "\" value=\"" . $value . "\">" . $description . "<Br />";
+                }
+            }
+
+            return $str;
+        }
+        else
+        {
+            return "Values empty";
+        }
+    }
 }
 
 

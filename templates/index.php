@@ -19,11 +19,13 @@
 <![endif]-->
 </head>
 <body>
+<p>%SELECT%</p>
 <p>%SELECT-MULTI%</p>
 <p>%TABLE%</p>
 <p>%LIST%</p>
 <p>%LIST-DEF%</p>
 <p>%CHECKBOX%</p>
+<p>%RADIO%</p>
 </body>
     </html
 
