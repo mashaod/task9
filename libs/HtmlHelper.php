@@ -36,6 +36,8 @@ class HtmlHelper
     {    
         if(!empty($caption) && !empty($name_col) && !empty($valuesTab))
         {
+            if(is_array($valuesTab ) && is_int($width) && is_int($border))
+            {
             $str = "<table width='$width' border='$border'>\n<caption>$caption</caption><tr>";
 
             foreach ($name_col as $name) 
@@ -59,6 +61,11 @@ class HtmlHelper
 
             $str = $str . "</table>";
             return $str;
+            } 
+            else
+            {
+                return "Invalid values";
+            }
         }
         else
         {
@@ -68,6 +75,10 @@ class HtmlHelper
 
     public static function createList($tag, $type, $valuesNum)
     {  
+        if(!empty($tag) && !empty($type) && !empty($valuesNum))
+        {
+            if(is_array($valuesNum))
+            {
         if ($tag == "ol")
         {
             $str="<$tag type='$type' start='3'>";
@@ -88,12 +99,24 @@ class HtmlHelper
 
         $str = $str . "</$tag>";
         return $str;
+                } 
+            else
+            {
+                return "Invalid values";
+            }
+        }
+        else
+        {
+            return "Values empty";
+        } 
     }
 
     public static function createListOfDefinitions($values)
     {  
         if(!empty($values))
         {
+            if(is_array($values))
+            {
             $str="<dl>";
 
             foreach ($values as $definition => $value)
@@ -103,6 +126,11 @@ class HtmlHelper
             }
 
             return $str;
+            }
+            else
+            {
+                return "Invalid values";
+            }
         }
         else
         {
@@ -112,10 +140,12 @@ class HtmlHelper
 
     public static function createCheckbox($name, $values, $checkVal='null')
     {  
-        if(!empty($values))
+        if(!empty($name) && !empty($values))
         {
-            foreach ($values as $value => $description)
+            if(is_array($values))
             {
+                foreach ($values as $value => $description)
+                {
                 if ($checkVal != 'null' && in_array($value, $checkVal))
                 {
                     $str .= "<input type=\"checkbox\" name=\"" . $name . "\" value=\"" . $value . "\" checked>" . $description . "<Br />";
@@ -124,9 +154,14 @@ class HtmlHelper
                 {
                     $str .= "<input type=\"checkbox\" name=\"" . $name . "\" value=\"" . $value . "\">" . $description . "<Br />";
                 }
-            }
+                }
 
             return $str;
+            }
+            else
+            {
+                return "Invalid values";
+            }
         }
         else
         {
@@ -135,8 +170,10 @@ class HtmlHelper
     }
     public static function createRadioButtons($name, $values, $checkVal='null')
     {  
-        if(!empty($values))
+        if(!empty($name) && !empty($values))
         {
+            if(is_array($values))
+            {
             foreach ($values as $value => $description)
             {
                 if ($checkVal != 'null' && $checkVal==$value)
@@ -147,9 +184,10 @@ class HtmlHelper
                 {
                     $str .= "<input type=\"radio\" name=\"" . $name . "\" value=\"" . $value . "\">" . $description . "<Br />";
                 }
+            else
+            {
+                return "Invalid values";
             }
-
-            return $str;
         }
         else
         {
