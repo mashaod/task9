@@ -11,11 +11,11 @@ class Controller
 
         $select = HtmlHelper::createSelect('my_name', array('one'=>'some_1','two'=>'some_2','three'=>'some_3','four'=>'some_4'));
         $selectMulti = HtmlHelper::createSelect('my_name', array('one'=>'some_1','two'=>'some_2','three'=>'some_3','four'=>'some_4'), 3, 1);
-        $table = HtmlHelper::createTable('50%', 2, 'Some information', array('US','UK','UA'),
+        $table = HtmlHelper::createTable('Some information', array('US','UK','UA'),
             array( 
                 array('some_1','some_2','some_3'),
                 array('some_1','some_2','some_3'), 
-                array('some_1','some_2','some_3')));
+                array('some_1','some_2','some_3')), 600, 2);
 
         $list = HtmlHelper::createList('ul', 'A', array('US','UK','UA'));
         $listOfDef = HtmlHelper::createListOfDefinitions(array('one'=>'some_1','two'=>'some_2','three'=>'some_3'));

@@ -5,9 +5,9 @@ class HtmlHelper
 
     public static function createSelect($name, $values, $size=1, $multi=false)
     {  
-        if(!empty($values))
+        if(!empty($values) && !empty($name))
         {
-            if(!empty($name) && !empty($size) && is_int($size))
+            if(is_array($values )&& is_int($size))
             {
                 $multi == '1'?$multi = 'multiple':$multi=false;
                 $str="<select size='$size' name='$name' $multi>";
@@ -22,7 +22,7 @@ class HtmlHelper
             } 
             else
             {
-                return "Some is wrong";
+                return "Invalid values";
             }
         }
         else
@@ -32,32 +32,39 @@ class HtmlHelper
     }
 
 
-    public static function createTable($width, $border, $caption, $name_col, $valuesTab)
+    public static function createTable($caption, $name_col, $valuesTab, $width=500, $border=1)
     {    
-        $str = "<table width='$width' border='$border'>\n<caption>$caption</caption><tr>";
-
-        foreach ($name_col as $name) 
+        if(!empty($caption) && !empty($name_col) && !empty($valuesTab))
         {
-            $str = $str . "<th>$name</th>\n";
-        }
+            $str = "<table width='$width' border='$border'>\n<caption>$caption</caption><tr>";
 
-        $str = $str . "</tr>";
-
-        foreach ($valuesTab as $row => $values) 
-        {
-            $str = $str . "<tr>";
-
-            foreach($values as $value)
+            foreach ($name_col as $name) 
             {
-                $str = $str . "<td>$value</td>";
+                $str = $str . "<th>$name</th>\n";
             }
 
-            $str = $str . "</tr>\n";
-        }
+            $str = $str . "</tr>";
 
-        $str = $str . "</table>";
-        return $str;
-    }
+            foreach ($valuesTab as $row => $values) 
+            {
+                $str = $str . "<tr>";
+
+                foreach($values as $value)
+                {
+                    $str = $str . "<td>$value</td>";
+                }
+
+                $str = $str . "</tr>\n";
+            }
+
+            $str = $str . "</table>";
+            return $str;
+        }
+        else
+        {
+            return "Values empty";
+        }  
+    }  
 
     public static function createList($tag, $type, $valuesNum)
     {  
